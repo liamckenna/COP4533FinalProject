@@ -1,12 +1,12 @@
 #pragma once
 class Item {
     int weight;
-    float value;
+    int value;
 public:
-    Item(int w, float v) {
+    Item(int w, int v) {
         weight = w;
         value = v;
     }
     int GetWeight() { return weight;}
-    float GetValue() { return value;}
+    int GetValue() { return value;}
 };

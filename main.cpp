@@ -9,13 +9,13 @@ using namespace std;
 int InputCount();
 Item* InputItem();
 int InputWeight();
-float InputValue();
+int InputValue();
 void InputOpt(vector<Item*> set);
 int InputI();
 int InputW();
 int InputK();
-pair<float, float***> OPT(int i, int w, int k, vector<Item*> itemSet, float*** &matrix);
-set<Item*> Traceback(int i, int w, int k, pair<float, float***> ov);
+pair<int, int***> OPT(int i, int w, int k, vector<Item*> itemSet, int*** &matrix);
+set<Item*> Traceback(int i, int w, int k, pair<int, int***> ov);
 int main() {
     int count = InputCount();
 
@@ -47,7 +47,7 @@ int InputCount() {
 
 Item* InputItem() {
     int weight = InputWeight();
-    float value = InputValue();
+    int value = InputValue();
     Item* item = new Item(weight, value);
     cout << "Inserting item of weight " << weight << " and value " << value << "." << endl;
     return item;
@@ -69,7 +69,7 @@ int InputWeight() {
     return stoi(inputWeight);
 }
 
-float InputValue() {
+int InputValue() {
     string inputValue;
     cout << "Value:";
     cin >> inputValue;
@@ -97,15 +97,16 @@ void InputOpt(vector<Item*> itemSet) {
     int i = InputI();
     int w = InputW();
     int k = InputK();
-    float*** matrix = 0;
-    matrix = new float**[i + 1];
+    cout << "initializing matrix now..." << endl;
+    int*** matrix = new int**[i + 1];
     for (int a = 0; a <= i; a++) {
-        matrix[a] = new float*[w];
+        matrix[a] = new int*[w + 1];
         for (int b = 0; b <= w; b++) {
-            matrix[a][b] = new float[k];
+            matrix[a][b] = new int[k + 1];
         }
     }
-    pair<float, float***> optimalValue = OPT(i, w, k, itemSet, matrix);
+    cout << "matrix is initialized." << endl;
+    pair<int, int***> optimalValue = OPT(i, w, k, itemSet, matrix);
     if (optimalValue.first != -1) {
         cout << "The maximum value of any subset contained within those parameters is..." << endl;
         cout << optimalValue.first << endl;
@@ -179,9 +180,8 @@ int InputK() {
     return stoi(k);
 }
 
-pair<float, float***> OPT(int i, int w, int k, vector<Item*> itemSet, float*** &matrix) {
-    //temp code, needs functionality
-
+pair<int, int***> OPT(int i, int w, int k, vector<Item*> itemSet, int*** &matrix) {
+    //cout << "running OPT() function..." << endl;
     for (int a = 0; a <= i; a++) {
         for (int b = 0; b <= w; b++) {
             for (int c = 0; c <= k; c++) {
@@ -192,23 +192,23 @@ pair<float, float***> OPT(int i, int w, int k, vector<Item*> itemSet, float*** &
                 } else if (itemSet[a-1]->GetWeight() > b) {
                     matrix[a][b][c] = matrix[a-1][b][c];
                 } else {
-                    float addedVal = -1;
+                    int addedVal = -1;
                     if (matrix[a-1][b-itemSet[a-1]->GetWeight()][c-1] != -1) {
                         addedVal = itemSet[a-1]->GetValue() + matrix[a-1][b-itemSet[a-1]->GetWeight()][c-1];
                     }
                     matrix[a][b][c] = max(matrix[a-1][b][c], addedVal);
                 }
-                cout << "i: " << a << ", w: " << b << ", k: " << c << endl;
-                cout << matrix[a][b][c] << endl;
+//                cout << "i: " << a << ", w: " << b << ", k: " << c << endl;
+//                cout << matrix[a][b][c] << endl;
             }
         }
     }
-    pair<float, float***> optimalValue;
+    pair<int, int***> optimalValue;
     optimalValue.first = matrix[i][w][k];
     optimalValue.second = matrix;
     return optimalValue;
 }
 
-set<Item*> Traceback(int i, int w, int k, pair<float, float***> ov) {
+set<Item*> Traceback(int i, int w, int k, pair<int, int***> ov) {
     
 }
