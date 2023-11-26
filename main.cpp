@@ -15,7 +15,7 @@ int InputI();
 int InputW();
 int InputK();
 pair<int, int***> OPT(int i, int w, int k, vector<Item*> itemSet, int*** &matrix);
-set<Item*> Traceback(int i, int w, int k, pair<int, int***> ov);
+set<Item*> Traceback(int i, int w, int k, vector<Item*> itemSet, int*** &matrix);
 int main() {
     int count = InputCount();
 
@@ -114,7 +114,7 @@ void InputOpt(vector<Item*> itemSet) {
         string tbInput;
         cin >> tbInput;
         if (tbInput == "1") {
-            set <Item*> subset = Traceback(i, w, k, optimalValue);
+            set <Item*> subset = Traceback(i, w, k, itemSet, optimalValue.second);
             if (!subset.empty()) {//precaution?
                 cout << "Optimal subset as (weight, value):" << endl;
                 for (auto item:subset) {
@@ -209,6 +209,18 @@ pair<int, int***> OPT(int i, int w, int k, vector<Item*> itemSet, int*** &matrix
     return optimalValue;
 }
 
-set<Item*> Traceback(int i, int w, int k, pair<int, int***> ov) {
-    
+set<Item*> Traceback(int i, int w, int k, vector<Item*> itemSet, int*** &matrix) {
+    int a = i, b = w, c = k;
+    set<Item*> items;
+    while (a > 0 || b > 0 || c > 0) {
+        if (matrix[a][b][c] == matrix[a-1][b][c]) {
+            a -= 1;
+        } else {
+            items.insert(itemSet[a-1]);
+            b -= itemSet[a-1]->GetWeight();
+            a -= 1;
+            c -= 1;
+        }
+    }
+    return items;
 }
