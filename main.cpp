@@ -185,19 +185,9 @@ pair<float, float***> OPT(int i, int w, int k, vector<Item*> itemSet, float*** &
     for (int a = 0; a <= i; a++) {
         for (int b = 0; b <= w; b++) {
             for (int c = 0; c <= k; c++) {
-                if (a == 0 || b == 0 || c == 0) {
+                if (b == 0 && c == 0) {
                     matrix[a][b][c] = 0;
-                }
-            }
-        }
-    }
-    for (int a = 0; a <= i; a++) {
-        for (int b = 0; b <= w; b++) {
-            for (int c = 0; c <= k; c++) {
-                if (a == 0 && b == 0 && c == 0) {
-                    continue;
-                }
-                if (a < c || (b > 0 && c == 0) || (b == 0 && c > 0)) {
+                } else if (a < c || (b > 0 && c == 0) || (b == 0 && c > 0)) {
                     matrix[a][b][c] = -1;
                 } else if (itemSet[a-1]->GetWeight() > b) {
                     matrix[a][b][c] = matrix[a-1][b][c];
@@ -207,11 +197,9 @@ pair<float, float***> OPT(int i, int w, int k, vector<Item*> itemSet, float*** &
                         addedVal = itemSet[a-1]->GetValue() + matrix[a-1][b-itemSet[a-1]->GetWeight()][c-1];
                     }
                     matrix[a][b][c] = max(matrix[a-1][b][c], addedVal);
-                    if (matrix[a][b][c] == addedVal) {
-                        cout << "i: " << a << ", w: " << b << ", k: " << c << endl;
-                        cout << addedVal << endl;
-                    }
                 }
+                cout << "i: " << a << ", w: " << b << ", k: " << c << endl;
+                cout << matrix[a][b][c] << endl;
             }
         }
     }
