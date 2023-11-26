@@ -13,8 +13,8 @@ void InputOpt(vector<Item*> set);
 int InputI();
 int InputW();
 int InputK();
-set<Item*> Traceback(int i, int w, int k, pair<int, vector<vector<vector<int>>>> matrix);
-pair<int, vector<vector<vector<int>>>> OPT(int i, int w, int k, vector<Item*> itemSet);
+pair<int, int***> OPT(int i, int w, int k, vector<Item*> itemSet, int*** matrix);
+set<Item*> Traceback(int i, int w, int k, pair<int, int***> ov);
 int main() {
     int count = InputCount();
 
@@ -96,7 +96,15 @@ void InputOpt(vector<Item*> itemSet) {
     int i = InputI();
     int w = InputW();
     int k = InputK();
-    pair<int, vector<vector<vector<int>>>> optimalValue = OPT(i, w, k, itemSet);
+    int*** matrix = 0;
+    matrix = new int**[i];
+    for (int eye = 0; eye < i; eye++) {
+        matrix[eye] = new int*[w];
+        for (int j = 0; j < w; j++) {
+            matrix[eye][j] = new int[k];
+        }
+    }
+    pair<int, int***> optimalValue = OPT(i, w, k, itemSet, matrix);
     if (optimalValue.first != NULL) {
         cout << "The maximum value of any subset contained within those parameters is..." << endl;
         cout << optimalValue.first << endl;
@@ -170,11 +178,15 @@ int InputK() {
     return stoi(k);
 }
 
-pair<int, vector<vector<vector<int>>>> OPT(int i, int w, int k, vector<Item*> itemSet) {
+pair<int, int***> OPT(int i, int w, int k, vector<Item*> itemSet, int*** matrix) {
     //temp code, needs functionality
-    
+    if (i < k) {
+
+    }
+
+
 }
 
-set<Item*> Traceback(int i, int w, int k, pair<int, vector<vector<vector<int>>>> matrix) {
+set<Item*> Traceback(int i, int w, int k, pair<int, int***> ov) {
     
 }
