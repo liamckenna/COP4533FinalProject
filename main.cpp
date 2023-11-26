@@ -115,14 +115,9 @@ void InputOpt(vector<Item*> itemSet) {
         cin >> tbInput;
         if (tbInput == "1") {
             set <Item*> subset = Traceback(i, w, k, itemSet, optimalValue.second);
-            if (!subset.empty()) {//precaution?
-                cout << "Optimal subset as (weight, value):" << endl;
-                for (auto item:subset) {
-                    cout << "(" << item->GetWeight() << ", " << item->GetValue() << ") ";
-                }
-                cout << endl;
-            } else {
-                cout << "A solution does not exist?" << endl;
+            cout << "Optimal subset as (weight, value):" << endl;
+            for (auto item:subset) {
+                cout << "(" << item->GetWeight() << ", " << item->GetValue() << ") ";
             }
         } else {
             cout << "You have selected to not perform the traceback function for this solution." << endl;
