@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <tuple>
+#include <set>
 #include "Item.h"
 using namespace std;
 int InputCount();
@@ -11,17 +13,18 @@ void InputOpt(vector<Item*> set);
 int InputI();
 int InputW();
 int InputK();
-int OPT(int i, int w, int k, vector<Item*> set);
+set<Item*> Traceback(int i, int w, int k, pair<int, vector<vector<vector<int>>>> matrix);
+pair<int, vector<vector<vector<int>>>> OPT(int i, int w, int k, vector<Item*> itemSet);
 int main() {
     int count = InputCount();
 
-    vector<Item*> set;
+    vector<Item*> itemSet;
     for (int i = 0; i < count; i++) {
         cout << "Item " << (i + 1) << endl;
         Item* item = InputItem();
-        set.push_back(item);
+        itemSet.push_back(item);
     }
-    InputOpt(set);
+    InputOpt(itemSet);
     return 0;
 }
 
@@ -30,7 +33,6 @@ int InputCount() {
     string input;
     cin >> input;
     try {
-        stoi(input);
         if (stoi(input) <= 0) throw input;
     } catch (string input) {
         cout << "That is an invalid size. Please try again." << endl;
@@ -82,7 +84,7 @@ int InputValue() {
     return stoi(inputValue);
 }
 
-void InputOpt(vector<Item*> set) {
+void InputOpt(vector<Item*> itemSet) {
     cout << "Enter 1 to perform Opt(i,w,k) function, and any other input to exit program." << endl;
     string option;
     cin >> option;
@@ -94,17 +96,32 @@ void InputOpt(vector<Item*> set) {
     int i = InputI();
     int w = InputW();
     int k = InputK();
-    int optimalValue = OPT(i, w, k, set);
-    if (optimalValue != NULL) {
+    pair<int, vector<vector<vector<int>>>> optimalValue = OPT(i, w, k, itemSet);
+    if (optimalValue.first != NULL) {
         cout << "The maximum value of any subset contained within those parameters is..." << endl;
-        cout << optimalValue << endl;
-        //Traceback function
+        cout << optimalValue.first << endl;
+        cout << "Would you like to perform the traceback function? Enter 1 for yes, anything else for no." << endl;
+        string tbInput;
+        cin >> tbInput;
+        if (tbInput == "1") {
+            set <Item*> subset = Traceback(i, w, k, optimalValue);
+            if (!subset.empty()) {//precaution?
+                cout << "Optimal subset as (weight, value):" << endl;
+                for (auto item:subset) {
+                    cout << "(" << item->GetWeight() << ", " << item->GetValue() << ") ";
+                }
+                cout << endl;
+            } else {
+                cout << "A solution does not exist?" << endl;
+            }
+        } else {
+            cout << "You have selected to not perform the traceback function for this solution." << endl;
+        }
     } else {
         cout << "A solution does not exist." << endl;
     }
-    InputOpt(set);
+    InputOpt(itemSet);
 }
-
 
 
 int InputI() {
@@ -153,8 +170,11 @@ int InputK() {
     return stoi(k);
 }
 
-int OPT(int i, int w, int k, vector<Item*> set) {
+pair<int, vector<vector<vector<int>>>> OPT(int i, int w, int k, vector<Item*> itemSet) {
     //temp code, needs functionality
-    if (i > 0) return i;
-    return NULL;
+    
+}
+
+set<Item*> Traceback(int i, int w, int k, pair<int, vector<vector<vector<int>>>> matrix) {
+    
 }

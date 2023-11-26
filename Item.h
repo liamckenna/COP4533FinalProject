@@ -7,4 +7,6 @@ public:
         weight = w;
         value = v;
     }
+    int GetWeight() { return weight;}
+    int GetValue() { return value;}
 };
