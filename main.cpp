@@ -17,6 +17,7 @@ int InputK();
 pair<int, int***> OPT(int i, int w, int k, vector<Item*> itemSet, int*** &matrix);
 set<Item*> Traceback(int i, int w, int k, vector<Item*> itemSet, int*** &matrix);
 int main() {
+    cout << "Delete me later!" << endl;
     int count = InputCount();
 
     vector<Item*> itemSet;
