@@ -1,3 +1,3 @@
-C:/Users/erika/Desktop/Fall23/COP4533/COP4533FinalProject/cmake-build-debug/CMakeFiles/COP4533FinalProject.dir
-C:/Users/erika/Desktop/Fall23/COP4533/COP4533FinalProject/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/erika/Desktop/Fall23/COP4533/COP4533FinalProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/lmcmc/CLionProjects/COP4533FinalProject/cmake-build-debug/CMakeFiles/COP4533FinalProject.dir
+C:/Users/lmcmc/CLionProjects/COP4533FinalProject/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/lmcmc/CLionProjects/COP4533FinalProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -5,20 +5,17 @@
 #include <set>
 #include <algorithm>
 #include "Item.h"
-
 using namespace std;
-
 int InputCount();
 Item* InputItem();
 int InputWeight();
 int InputValue();
 void InputOpt(vector<Item*> set);
-int InputI(vector<Item*> itemSet);
+int InputI();
 int InputW();
 int InputK();
 pair<int, int***> OPT(int i, int w, int k, vector<Item*> itemSet, int*** &matrix);
 set<Item*> Traceback(int i, int w, int k, vector<Item*> itemSet, int*** &matrix);
-
 int main() {
     int count = InputCount();
 
@@ -97,10 +94,10 @@ void InputOpt(vector<Item*> itemSet) {
         return;
     }
     cout << "Define first i items of size exactly k whose total weight is exactly w for OPT(i,w,k)." << endl;
-    int i = InputI(itemSet);
+    int i = InputI();
     int w = InputW();
     int k = InputK();
-    //cout << "initializing matrix now..." << endl;
+    cout << "initializing matrix now..." << endl;
     int*** matrix = new int**[i + 1];
     for (int a = 0; a <= i; a++) {
         matrix[a] = new int*[w + 1];
@@ -108,7 +105,7 @@ void InputOpt(vector<Item*> itemSet) {
             matrix[a][b] = new int[k + 1];
         }
     }
-    //cout << "matrix is initialized." << endl;
+    cout << "matrix is initialized." << endl;
     pair<int, int***> optimalValue = OPT(i, w, k, itemSet, matrix);
     if (optimalValue.first != -1) {
         cout << "The maximum value of any subset contained within those parameters is..." << endl;
@@ -118,17 +115,10 @@ void InputOpt(vector<Item*> itemSet) {
         cin >> tbInput;
         if (tbInput == "1") {
             set <Item*> subset = Traceback(i, w, k, itemSet, optimalValue.second);
-            if(subset.size() != 0)
-            {
-                cout << "Optimal subset as (weight, value):" << endl;
-                for (auto item: subset)
-                {
-                    cout << "(" << item->GetWeight() << ", " << item->GetValue() << ") ";
-                }
-            }else{
-                cout << "Optimal subset is an empty set.";
+            cout << "Optimal subset as (weight, value):" << endl;
+            for (auto item:subset) {
+                cout << "(" << item->GetWeight() << ", " << item->GetValue() << ") ";
             }
-            cout << endl;
         } else {
             cout << "You have selected to not perform the traceback function for this solution." << endl;
         }
@@ -138,7 +128,8 @@ void InputOpt(vector<Item*> itemSet) {
     InputOpt(itemSet);
 }
 
-int InputI(vector<Item*> itemSet) {
+
+int InputI() {
     cout << "Let i=";
     string i;
     cin >> i;
@@ -146,18 +137,13 @@ int InputI(vector<Item*> itemSet) {
         if (stoi(i) < 0) throw i;
     } catch (string input) {
         cout << "That is an invalid i value. Please try again." << endl;
-        return InputI(itemSet);
+        return InputI();
     } catch (exception invalid_argument) {
         cout << "That is an invalid i value. Please try again." << endl;
-        return InputI(itemSet);
-    }
-    if(stoi(i) > itemSet.size()){
-        cout << "i must be equal or less than set count. Please try again." << endl;
-        return InputI(itemSet);
+        return InputI();
     }
     return stoi(i);
 }
-
 int InputW() {
     cout << "Let w=";
     string w;
@@ -173,7 +159,6 @@ int InputW() {
     }
     return stoi(w);
 }
-
 int InputK() {
     cout << "Let k=";
     string k;
